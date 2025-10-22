@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MCP² - AI Interview Prep",
+  title: "AI Interview Prep",
   description: "AI that schedules and prepares you to ace every interview",
 };
 

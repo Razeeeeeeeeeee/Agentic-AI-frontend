@@ -67,9 +67,9 @@ export default function Home() {
               <button className="text-gray-900/80 hover:text-gray-900 flex items-center gap-1 transition-all group">
                 Use Cases <span className="text-xs transition-transform duration-200 group-hover:translate-y-0.5">▾</span>
               </button>
-              <button className="text-gray-600 hover:text-gray-900 transition-all group flex items-center gap-1">
+              {/* <button className="text-gray-600 hover:text-gray-900 transition-all group flex items-center gap-1">
                 Pricing <span className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200">→</span>
-              </button>
+              </button> */}
             </div>
             <div className="flex items-center gap-4">
               <Link href="/login" className="bg-gray-900/90 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition-all flex items-center gap-2 group">
@@ -229,7 +229,7 @@ export default function Home() {
               Most people waste hours <TextHighlighter direction="ltr">juggling calendars</TextHighlighter>, <TextHighlighter direction="ltr">digging through emails</TextHighlighter>, and <TextHighlighter direction="ltr">cramming prep</TextHighlighter>.
             </p>
             <p className="text-gray-600 text-2xl leading-relaxed mt-4 max-w-2xl mx-auto">
-              <TextHighlighter direction="ltr">MCP</TextHighlighter><sup>2</sup> gives you <TextHighlighter direction="ltr">clarity</TextHighlighter>, <TextHighlighter direction="ltr">structure</TextHighlighter>, and <TextHighlighter direction="ltr">focus</TextHighlighter>, without the stress.
+              <TextHighlighter direction="ltr">AI Interviewer</TextHighlighter> gives you <TextHighlighter direction="ltr">clarity</TextHighlighter>, <TextHighlighter direction="ltr">structure</TextHighlighter>, and <TextHighlighter direction="ltr">focus</TextHighlighter>, without the stress.
             </p>
           </div>
         </section>
@@ -291,7 +291,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row justify-between items-start gap-16">
               <div>
                 <div className="text-4xl font-bold text-gray-900 poly-regular">
-                  mcp<sup>2</sup>
+                  AI Interview Prep
                 </div>
                 <p className="text-gray-600 text-lg leading-relaxed max-w-sm poly-regular mt-2">
                   AI that schedules, prepares, and gets<br />you ready to ace every interview.
