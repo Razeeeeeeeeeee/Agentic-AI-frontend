@@ -54,7 +54,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false, // Disable to prevent infinite loops on login/logout
+    refetchOnMount: true, // Still refetch on component mount
     retry: 1, // Only retry once on failure
   });
 

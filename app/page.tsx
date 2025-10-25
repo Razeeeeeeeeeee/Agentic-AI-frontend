@@ -58,7 +58,7 @@ export default function Home() {
           <nav className="w-full bg-gradient-to-b from-[#FF7545]/40 to-white">
             <div className="flex items-center justify-between p-8 max-w-7xl mx-auto">
             <div className="text-2xl font-bold text-gray-900 poly-regular">
-              AI Interview Prep
+              AI Student Helper
             </div>
             <div className="hidden md:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
               <button className="text-gray-900/80 hover:text-gray-900 flex items-center gap-1 transition-all group">
@@ -229,7 +229,7 @@ export default function Home() {
               Most people waste hours <TextHighlighter direction="ltr">juggling calendars</TextHighlighter>, <TextHighlighter direction="ltr">digging through emails</TextHighlighter>, and <TextHighlighter direction="ltr">cramming prep</TextHighlighter>.
             </p>
             <p className="text-gray-600 text-2xl leading-relaxed mt-4 max-w-2xl mx-auto">
-              <TextHighlighter direction="ltr">AI Interviewer</TextHighlighter> gives you <TextHighlighter direction="ltr">clarity</TextHighlighter>, <TextHighlighter direction="ltr">structure</TextHighlighter>, and <TextHighlighter direction="ltr">focus</TextHighlighter>, without the stress.
+              <TextHighlighter direction="ltr">AI Student Helper</TextHighlighter> gives you <TextHighlighter direction="ltr">clarity</TextHighlighter>, <TextHighlighter direction="ltr">structure</TextHighlighter>, and <TextHighlighter direction="ltr">focus</TextHighlighter>, without the stress.
             </p>
           </div>
         </section>
@@ -291,7 +291,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row justify-between items-start gap-16">
               <div>
                 <div className="text-4xl font-bold text-gray-900 poly-regular">
-                  AI Interview Prep
+                  AI Student Helper
                 </div>
                 <p className="text-gray-600 text-lg leading-relaxed max-w-sm poly-regular mt-2">
                   AI that schedules, prepares, and gets<br />you ready to ace every interview.

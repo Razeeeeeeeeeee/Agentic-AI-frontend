@@ -91,7 +91,7 @@ function EventWrapper({
 
 interface EventItemProps {
   event: CalendarEvent;
-  view: "month" | "week" | "day" | "agenda";
+  view: "month" | "week" | "day" | "agenda" | "schedule";
   isDragging?: boolean;
   onClick?: (e: React.MouseEvent) => void;
   showTime?: boolean;
@@ -197,13 +197,21 @@ export function EventItem({
               )}
               {event.title}
             </span>
-            <button
+            <div
               onClick={handleStarClick}
-              className="shrink-0 opacity-0 group-hover:opacity-80 transition-opacity hover:opacity-100 hover:text-yellow-500 z-10"
+              className="shrink-0 opacity-0 group-hover:opacity-80 transition-opacity hover:opacity-100 hover:text-yellow-500 z-10 cursor-pointer"
               aria-label="Add to chat context"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleStarClick(e as any);
+                }
+              }}
             >
               <Star size={12} />
-            </button>
+            </div>
           </div>
         )}
       </EventWrapper>
@@ -240,25 +248,41 @@ export function EventItem({
                 </span>
               )}
             </div>
-            <button
+            <div
               onClick={handleStarClick}
-              className="shrink-0 opacity-0 group-hover:opacity-80 transition-opacity hover:opacity-100 hover:text-yellow-500 z-10"
+              className="shrink-0 opacity-0 group-hover:opacity-80 transition-opacity hover:opacity-100 hover:text-yellow-500 z-10 cursor-pointer"
               aria-label="Add to chat context"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleStarClick(e as any);
+                }
+              }}
             >
               <Star size={12} />
-            </button>
+            </div>
           </div>
         ) : (
           <>
             <div className="flex w-full items-center justify-between gap-1">
               <div className="truncate font-medium">{event.title}</div>
-              <button
+              <div
                 onClick={handleStarClick}
-                className="shrink-0 opacity-0 group-hover:opacity-80 transition-opacity hover:opacity-100 hover:text-yellow-500 z-10"
+                className="shrink-0 opacity-0 group-hover:opacity-80 transition-opacity hover:opacity-100 hover:text-yellow-500 z-10 cursor-pointer"
                 aria-label="Add to chat context"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleStarClick(e as any);
+                  }
+                }}
               >
                 <Star size={12} />
-              </button>
+              </div>
             </div>
             {showTime && (
               <div className="truncate font-normal opacity-70 sm:text-xs uppercase">
@@ -289,13 +313,21 @@ export function EventItem({
     >
       <div className="flex w-full items-center justify-between">
         <div className="text-sm font-medium truncate">{event.title}</div>
-        <button
+        <div
           onClick={handleStarClick}
-          className="shrink-0 opacity-0 group-hover:opacity-80 transition-opacity hover:opacity-100 hover:text-yellow-500 z-10"
+          className="shrink-0 opacity-0 group-hover:opacity-80 transition-opacity hover:opacity-100 hover:text-yellow-500 z-10 cursor-pointer"
           aria-label="Add to chat context"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleStarClick(e as any);
+            }
+          }}
         >
           <Star size={14} />
-        </button>
+        </div>
       </div>
       <div className="text-xs opacity-70">
         {event.allDay ? (

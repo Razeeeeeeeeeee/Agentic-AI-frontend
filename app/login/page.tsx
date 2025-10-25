@@ -11,7 +11,7 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <h1 className="text-7xl font-normal leading-tight mb-6 poly-regular text-gray-900">
-              welcome <span className="poly-regular-italic text-orange-400">back</span>
+              Welcome <span className="poly-regular-italic text-orange-400">back</span>
             </h1>
             <p className="text-gray-600 text-xl">Sign in to continue to your dashboard</p>
           </div>

@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Interview Prep",
-  description: "AI that schedules and prepares you to ace every interview",
+  title: "AI Student Helper",
+  description: "AI that prepares you to ace every exam",
 };
 
 export default function RootLayout({

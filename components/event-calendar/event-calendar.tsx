@@ -28,9 +28,12 @@ import {
   DayView,
   EventGap,
   EventHeight,
+  FourDayView,
   MonthView,
+  ScheduleView,
   WeekCellsHeight,
   WeekView,
+  YearView,
 } from "@/components/event-calendar";
 import type { CalendarEvent, CalendarView } from "@/components/event-calendar";
 import { cn } from "@/lib/utils";
@@ -104,6 +107,18 @@ export function EventCalendar({
           setView("agenda");
           onViewChange?.("agenda");
           break;
+        case "y":
+          setView("year");
+          onViewChange?.("year");
+          break;
+        case "s":
+          setView("schedule");
+          onViewChange?.("schedule");
+          break;
+        case "4":
+          setView("4day");
+          onViewChange?.("4day");
+          break;
       }
     };
 
@@ -112,7 +127,7 @@ export function EventCalendar({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [onViewChange]);
 
   const handlePrevious = () => {
     let newDate: Date;
@@ -125,6 +140,12 @@ export function EventCalendar({
     } else if (view === "agenda") {
       // For agenda view, go back 30 days (a full month)
       newDate = addDays(currentDate, -AgendaDaysToShow);
+    } else if (view === "year") {
+      newDate = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), 1);
+    } else if (view === "schedule") {
+      newDate = addDays(currentDate, -7);
+    } else if (view === "4day") {
+      newDate = addDays(currentDate, -4);
     } else {
       newDate = currentDate;
     }
@@ -143,6 +164,12 @@ export function EventCalendar({
     } else if (view === "agenda") {
       // For agenda view, go forward 30 days (a full month)
       newDate = addDays(currentDate, AgendaDaysToShow);
+    } else if (view === "year") {
+      newDate = new Date(currentDate.getFullYear() + 1, currentDate.getMonth(), 1);
+    } else if (view === "schedule") {
+      newDate = addDays(currentDate, 7);
+    } else if (view === "4day") {
+      newDate = addDays(currentDate, 4);
     } else {
       newDate = currentDate;
     }
@@ -272,6 +299,24 @@ export function EventCalendar({
       } else {
         return `${format(start, "MMM")} - ${format(end, "MMM yyyy")}`;
       }
+    } else if (view === "year") {
+      return format(currentDate, "yyyy");
+    } else if (view === "schedule") {
+      const start = currentDate;
+      const end = addDays(currentDate, 6);
+      if (isSameMonth(start, end)) {
+        return format(start, "MMMM yyyy");
+      } else {
+        return `${format(start, "MMM")} - ${format(end, "MMM yyyy")}`;
+      }
+    } else if (view === "4day") {
+      const start = currentDate;
+      const end = addDays(currentDate, 3);
+      if (isSameMonth(start, end)) {
+        return format(start, "MMMM yyyy");
+      } else {
+        return `${format(start, "MMM")} - ${format(end, "MMM yyyy")}`;
+      }
     } else {
       return format(currentDate, "MMMM yyyy");
     }
@@ -291,7 +336,7 @@ export function EventCalendar({
       <CalendarDndProvider onEventUpdate={handleEventUpdate}>
         <div
           className={cn(
-            "flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-5 sm:px-4",
+            "relative flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-5 sm:px-4 bg-background border-b",
             className,
           )}
         >
@@ -363,7 +408,7 @@ export function EventCalendar({
                     variant="outline"
                     className="gap-1.5 max-sm:h-8 max-sm:px-2! max-sm:gap-1"
                   >
-                    <span className="capitalize">{view}</span>
+                    <span className="capitalize">{view === "4day" ? "4 Days" : view}</span>
                     <ChevronDownIcon
                       className="-me-1 opacity-60"
                       size={16}
@@ -371,15 +416,24 @@ export function EventCalendar({
                     />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="min-w-32">
-                  <DropdownMenuItem onClick={() => { setView("month"); onViewChange?.("month"); }}>
-                    Month <DropdownMenuShortcut>M</DropdownMenuShortcut>
+                <DropdownMenuContent align="end" className="min-w-40">
+                  <DropdownMenuItem onClick={() => { setView("day"); onViewChange?.("day"); }}>
+                    Day <DropdownMenuShortcut>D</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => { setView("4day"); onViewChange?.("4day"); }}>
+                    4 Days <DropdownMenuShortcut>4</DropdownMenuShortcut>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => { setView("week"); onViewChange?.("week"); }}>
                     Week <DropdownMenuShortcut>W</DropdownMenuShortcut>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => { setView("day"); onViewChange?.("day"); }}>
-                    Day <DropdownMenuShortcut>D</DropdownMenuShortcut>
+                  <DropdownMenuItem onClick={() => { setView("month"); onViewChange?.("month"); }}>
+                    Month <DropdownMenuShortcut>M</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => { setView("year"); onViewChange?.("year"); }}>
+                    Year <DropdownMenuShortcut>Y</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => { setView("schedule"); onViewChange?.("schedule"); }}>
+                    Schedule <DropdownMenuShortcut>S</DropdownMenuShortcut>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => { setView("agenda"); onViewChange?.("agenda"); }}>
                     Agenda <DropdownMenuShortcut>A</DropdownMenuShortcut>
@@ -390,7 +444,7 @@ export function EventCalendar({
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col">
+        <div className="relative flex flex-1 flex-col overflow-auto" key={view}>
           {view === "month" && (
             <MonthView
               currentDate={currentDate}
@@ -423,6 +477,36 @@ export function EventCalendar({
               currentDate={currentDate}
               events={events}
               onEventSelect={handleEventSelect}
+              onStarClick={onStarClick}
+            />
+          )}
+          {view === "year" && (
+            <YearView
+              currentDate={currentDate}
+              events={events}
+              onEventSelect={handleEventSelect}
+              onDateClick={(date) => {
+                setCurrentDate(date);
+                setView("day");
+                onViewChange?.("day");
+              }}
+            />
+          )}
+          {view === "schedule" && (
+            <ScheduleView
+              currentDate={currentDate}
+              events={events}
+              onEventSelect={handleEventSelect}
+              onStarClick={onStarClick}
+              daysToShow={7}
+            />
+          )}
+          {view === "4day" && (
+            <FourDayView
+              currentDate={currentDate}
+              events={events}
+              onEventSelect={handleEventSelect}
+              onEventCreate={handleEventCreate}
               onStarClick={onStarClick}
             />
           )}

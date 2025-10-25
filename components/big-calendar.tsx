@@ -605,7 +605,7 @@ const sampleEvents: CalendarEvent[] = [
 
 export default function Component({ apiEvents }: { apiEvents?: ApiCalendarEvent[] }) {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
-  const [currentView, setCurrentView] = useState<'month' | 'week' | 'day' | 'agenda'>('week');
+  const [currentView, setCurrentView] = useState<'month' | 'week' | 'day' | 'agenda' | 'year' | 'schedule' | '4day'>('week');
   const { currentDate, setCurrentDate, isColorVisible } = useCalendarContext();
 
   // Calculate date range based on current view and date
@@ -647,6 +647,26 @@ export default function Component({ apiEvents }: { apiEvents?: ApiCalendarEvent[
         startDate.setDate(startDate.getDate() - 7); // 1 week before
         endDate = new Date(baseDate);
         endDate.setDate(endDate.getDate() + 30); // 30 days after
+        break;
+      }
+      case 'year': {
+        // Show full year
+        startDate = new Date(baseDate.getFullYear(), 0, 1);
+        endDate = new Date(baseDate.getFullYear(), 11, 31);
+        break;
+      }
+      case 'schedule': {
+        // Show 7 days starting from current date
+        startDate = new Date(baseDate);
+        endDate = new Date(baseDate);
+        endDate.setDate(endDate.getDate() + 7);
+        break;
+      }
+      case '4day': {
+        // Show 4 days starting from current date
+        startDate = new Date(baseDate);
+        endDate = new Date(baseDate);
+        endDate.setDate(endDate.getDate() + 4);
         break;
       }
       default: {
@@ -820,8 +840,8 @@ export default function Component({ apiEvents }: { apiEvents?: ApiCalendarEvent[
     }
   };
 
-  // Show loading or error states
-  if (isLoading) {
+  // Show loading state only on initial load, not on view changes
+  if (isLoading && events.length === 0) {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="text-center">
@@ -865,7 +885,7 @@ export default function Component({ apiEvents }: { apiEvents?: ApiCalendarEvent[
   }
 
   // Handle view/date changes from the calendar component
-  const handleViewChange = (newView: 'month' | 'week' | 'day') => {
+  const handleViewChange = (newView: 'month' | 'week' | 'day' | 'agenda' | 'year' | 'schedule' | '4day') => {
     console.log('📅 View changed to:', newView);
     setCurrentView(newView);
   };
